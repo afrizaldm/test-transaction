@@ -11,7 +11,7 @@ const init = async () => {
 
     console.log(res?.data)
 
-    if(res?.data.message != 'success') {
+    if (res?.data.message != 'success') {
         return
     }
 
@@ -32,7 +32,7 @@ const destroy = async (item: Transaction) => {
     init()
 }
 
-const add = ()  => {
+const add = () => {
     router.push('transactions/add')
 }
 
@@ -40,28 +40,42 @@ const add = ()  => {
 </script>
 <template>
     <h2>Data Transactions</h2>
-    
+
     <button @click="add">Add New</button>
-    
-    <table>
+
+    <table class="table">
         <thead>
-            <td>ID</td>
-            <td>User ID</td>
-            <td>Amount</td>
-            <td>Status</td>
-            <td>action</td>
+            <tr>
+                <th>ID</th>
+                <th>User ID</th>
+                <th>Amount</th>
+                <th>Status</th>
+                <th>action</th>
+            </tr>
         </thead>
-        <tr v-for="item in TransactionStorage">
-            <td>{{ item.id }}</td>
-            <td>{{ item.user_id }}</td>
-            <td>{{ item.amount }}</td>
-            <td>{{ item.status }}</td>
-            <td>
-                <button @click="edit(item)">Edit</button>
-                <button @click="destroy(item)">Delete</button>
-            </td>
-        </tr>
+        <tbody>
+            <tr v-for="item in TransactionStorage">
+                <td>{{ item.id }}</td>
+                <td>{{ item.user?.id }} - {{ item.user?.name }}</td>
+                <td>{{ item.amount }}</td>
+                <td>{{ item.status }}</td>
+                <td>
+                    <button @click="edit(item)">Edit</button>
+                    <button @click="destroy(item)">Delete</button>
+                </td>
+            </tr>
+        </tbody>
     </table>
 
 </template>
-<style lang="sass" scoped></style>
+<style scoped lang="scss">
+.table {
+    border: 1px solid black;
+
+    td {
+        border: 1px solid black;
+        
+        min-width: 100px;
+    }
+}
+</style>

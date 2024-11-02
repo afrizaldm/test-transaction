@@ -5,7 +5,7 @@
         <form @submit.prevent="handleSubmit">
             <div>
                 <label for="name">User ID:</label>
-                <select v-model="formData.status" id="county" required>
+                <select v-model="formData.user_id" id="county" required>
                 <option disabled value="">Please select User</option>
                 <option :selected="formData.user_id == user.id" v-for="user in UserStorage" :key="(user.id as number)" :value="user.id">
                     {{ user.id }} | {{ user.name }}

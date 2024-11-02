@@ -14,7 +14,7 @@ class TransactionController extends Controller
      */
     public function index()
     {
-        return response()->json(['data' => Transaction::all(), 'message' => 'success'], 200);
+        return response()->json(['data' => Transaction::with('user')->get(), 'message' => 'success'], 200);
     }
 
     /**

@@ -14,4 +14,8 @@ class Transaction extends Model
         'amount',
         'status',
     ];
+
+    public function user() {
+        return $this->hasOne(User::class, 'id', 'user_id');
+    }
 }

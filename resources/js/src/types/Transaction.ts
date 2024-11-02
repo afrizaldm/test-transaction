@@ -1,3 +1,5 @@
+import { User } from "./User";
+
 export type Transaction = {
     id: number | null
     amount: number
@@ -5,6 +7,8 @@ export type Transaction = {
     status: 'pending' | 'failed' | 'success' | ''
     created_at?: any
     deleted_at?: any
+
+    user?: User
 }
 
 export default Transaction

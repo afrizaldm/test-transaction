@@ -17,7 +17,9 @@ class TransactionSeeder extends Seeder
         $users = User::all();
 
         foreach ($users as $key => $user) {
-            Transaction::factory(10)->create();
+            Transaction::factory(rand(1, 10))->create([
+                "user_id"=> $user->id,
+            ]);
         }
 
     }
