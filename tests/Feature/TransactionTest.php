@@ -17,7 +17,7 @@ class TransactionTest extends TestCase
      */
     public function test_can_fetch_all_transactions(): void
     {
-        $response = $this->get('/api/transaction');
+        $response = $this->get('/api/transactions');
         $response->assertStatus(200);
     }
 
@@ -26,8 +26,12 @@ class TransactionTest extends TestCase
      */
     public function test_can_create_a_transaction(): void
     {
-        $data = Transaction::factory()->make();
-        $response = $this->post('/api/transaction', $data);
+        $data = [
+            'user_id' => 1,
+            'amount' => 100,
+            'status' => 'pending',
+        ];
+        $response = $this->post('/api/transactions', $data);
         $response->assertStatus(201);
     }
 
@@ -37,7 +41,7 @@ class TransactionTest extends TestCase
     public function test_fetch_a_single_transaction(): void
     {
         $data = Transaction::factory()->create();
-        $response = $this->get('/api/transaction/' . $data->id);
+        $response = $this->get('/api/transactions/' . $data->id);
         $response->assertStatus(200);
     }
 
@@ -51,7 +55,7 @@ class TransactionTest extends TestCase
             'amount' => 100,
             'status' => 'pending',
         ];
-        $response = $this->put('/api/transaction/' . $data->id, $newData);
+        $response = $this->put('/api/transactions/' . $data->id, $newData);
         $response->assertStatus(200);
     }
 
@@ -61,7 +65,7 @@ class TransactionTest extends TestCase
     public function test_delete_a_transaction(): void
     {
         $data = Transaction::factory()->create();
-        $response = $this->delete('/api/transaction/' . $data->id);
+        $response = $this->delete('/api/transactions/' . $data->id);
         $response->assertStatus(204);
     }
 }
