@@ -56,7 +56,7 @@ class TransactionController extends Controller
     public function update(UpdateTransactionRequest $request, Transaction $transaction)
     {
         $transaction->update($request->all());
-        return response()->json(['data'=> $transaction, 'message'=> 'success'],201);
+        return response()->json(['data'=> $transaction, 'message'=> 'success'],200);
     }
 
     /**
