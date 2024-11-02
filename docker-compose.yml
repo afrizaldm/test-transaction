@@ -1,7 +1,7 @@
 services:
   app:
     image: bitnami/laravel:latest
-    container_name: laravel_test_kominfo_afrizaldm
+    container_name: laravel_transaction_afrizaldm
     ports:
       - "8000:8000"
     volumes:
@@ -12,15 +12,18 @@ services:
     command: >
       sh -c "
 
+      # Install Node.js and npm
+      apt-get update && apt-get install -y nodejs npm;
+
       if [ ! -f /app/.env ]; then
         cp /app/.env.example /app/.env;
       fi;
 
-      apk add --update nodejs npm;
+      # Install npm dependencies
+      npm install;
 
-      npm i;
-
-      npm build;
+      # Build the assets
+      npm run build;
 
       composer install;
       
