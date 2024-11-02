@@ -10,10 +10,10 @@ import { TokenStorage } from '@/services/Token';
 
 const auth = async () => {
     try {
-        const res = await axios('/auth/user');
+        const res = await axios.post('/auth/user');
 
-        if (res?.data?.data != null) {
-            return res.data.data;
+        if (res?.data?.data?.token) {
+            return res.data?.data;
         }
 
         return null
@@ -28,12 +28,19 @@ app.use(router)
 
 router.isReady().then(async () => {
 
-    const res = await auth()
+    const data = await auth()
 
-    if (res?.data.data.token != null) {
-        AuthStorage.value = res?.data.data.user
-        TokenStorage.value = res?.data.data.token
+    console.log(data?.user)
+
+    if (data?.token) {
+        AuthStorage.value = data?.user
+        TokenStorage.value = data?.token
+    } else {
+        TokenStorage.value = ''
+        TokenStorage.value = null
     }
+
+    console.log(AuthStorage.value, TokenStorage.value)
 
     app.mount('#app')
 })
