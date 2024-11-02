@@ -6,6 +6,9 @@ import { Transaction } from "@/types";
 import { axios } from "@/modules/axios";
 import router from "@/router";
 
+const filteredString = ref<string>('')
+const filteredDataTransaction = ref<Transaction[]>([])
+
 const init = async () => {
     const res = await axios.get('/transactions')
 
@@ -21,6 +24,11 @@ const init = async () => {
 onMounted(() => {
     init()
 })
+
+const filter = (status: string) => {
+    filteredString.value = status
+    filteredDataTransaction.value = TransactionStorage.value.filter(transaction => transaction.status == status)
+}
 
 const edit = async (item: Transaction) => {
     router.push('/transactions/' + item.id)
@@ -40,8 +48,16 @@ const add = () => {
 </script>
 <template>
     <h2>Data Transactions</h2>
+    <div>
+        <button :class="{'select': filteredString == ''}" @click="filter('')">All</button>
+        <button :class="{'select': filteredString == 'pending'}" @click="filter('pending')">Pending</button>
+        <button :class="{'select': filteredString == 'failed'}" @click="filter('failed')">Failed</button>
+        <button  :class="{'select': filteredString == 'success'}" @click="filter('success')">Success</button>
+    </div>
 
-    <button @click="add">Add New</button>
+    <div>
+        <button @click="add">Add New</button>
+    </div>
 
     <table class="table">
         <thead>
@@ -54,7 +70,7 @@ const add = () => {
             </tr>
         </thead>
         <tbody>
-            <tr v-for="item in TransactionStorage">
+            <tr v-for="item in (filteredString == '' ? TransactionStorage : filteredDataTransaction)">
                 <td>{{ item.id }}</td>
                 <td>{{ item.user?.id }} - {{ item.user?.name }}</td>
                 <td>{{ item.amount }}</td>
@@ -74,8 +90,18 @@ const add = () => {
 
     td {
         border: 1px solid black;
+
+        padding: 2px;
         
         min-width: 100px;
     }
+}
+
+button {
+    margin: 3px 5px;
+}
+
+.select {
+    background-color: green;
 }
 </style>

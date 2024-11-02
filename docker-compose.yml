@@ -1,0 +1,35 @@
+services:
+  app:
+    image: bitnami/laravel:latest
+    container_name: laravel_test_kominfo_afrizaldm
+    ports:
+      - "8000:8000"
+    volumes:
+      - .:/app
+    environment:
+      - DB_CONNECTION=sqlite
+      - DB_DATABASE=/app/database/database.sqlite
+    command: >
+      sh -c "
+
+      if [ ! -f /app/.env ]; then
+        cp /app/.env.example /app/.env;
+      fi;
+
+      apk add --update nodejs npm;
+
+      npm i;
+
+      npm build;
+
+      composer install;
+      
+      php artisan key:generate;
+
+      if [ ! -f /app/database/database.sqlite ]; then
+        touch /app/database/database.sqlite;
+        php artisan migrate;
+      fi;
+
+      php artisan serve --host=0.0.0.0 --port=8000
+      "
