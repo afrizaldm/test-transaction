@@ -32,9 +32,17 @@ const destroy = async (item: Transaction) => {
     init()
 }
 
+const add = ()  => {
+    router.push('transactions/add')
+}
+
 
 </script>
 <template>
+    <h2>Data Transactions</h2>
+    
+    <button @click="add">Add New</button>
+    
     <table>
         <thead>
             <td>ID</td>
@@ -54,5 +62,6 @@ const destroy = async (item: Transaction) => {
             </td>
         </tr>
     </table>
+
 </template>
 <style lang="sass" scoped></style>
