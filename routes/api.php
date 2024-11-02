@@ -9,3 +9,4 @@ Route::get('/user', function (Request $request) {
 })->middleware('auth:sanctum');
 
 Route::resource('transactions', Api\TransactionController::class);
+Route::get('users', Api\UController::class);

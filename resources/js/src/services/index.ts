@@ -3,5 +3,5 @@ import { UserStorage } from "./User";
 
 export {
     TransactionStorage,
-    TransactionStorage,
+    UserStorage,
 }

@@ -1,19 +1,21 @@
 <template>
     <div class="form-container">
+        <button @click="back">Back</button>
+
         <form @submit.prevent="handleSubmit">
             <div>
                 <label for="name">User ID:</label>
-                <input v-model="formData.user_id" id="name" type="text" required />
+                <select v-model="formData.status" id="county" required>
+                <option disabled value="">Please select User</option>
+                <option :selected="formData.user_id == user.id" v-for="user in UserStorage" :key="(user.id as number)" :value="user.id">
+                    {{ user.id }} | {{ user.name }}
+                </option>
+            </select>
             </div>
 
             <div>
                 <label for="city">Amount:</label>
                 <input v-model="formData.amount" id="city" type="number" required />
-            </div>
-
-            <div>
-                <label for="state">Status:</label>
-                <input v-model="formData.status" id="state" type="text" required />
             </div>
 
             <label for="county">Status:</label>
@@ -30,7 +32,8 @@
 </template>
 <script setup lang="ts">
 import { ref, onMounted } from "vue";
-import { Transaction } from "@/types";
+import { UserStorage } from "@/services";
+import { Transaction, User } from "@/types";
 import { axios } from "@/modules/axios";
 import router from "@/router";
 import { useRoute } from "vue-router";
@@ -63,6 +66,20 @@ const init = async () => {
     
 }
 
+const initUser = async() => {
+    const res = await axios.get('/users')
+
+    console.log(res?.data)
+
+    if(res?.data.message != 'success') {
+        return
+    }
+
+    UserStorage.value = res?.data.data as User[]
+}
+
+const back = () => router.back()
+
 const handleSubmit = async () => {
 
     if(formData.value.id == null) {
@@ -89,7 +106,10 @@ const clearForm = () => {
     }
 };
 
-onMounted(() => init())
+onMounted(() => {
+    init()
+    initUser()
+})
 
 </script>
 <style scoped lang="scss">
