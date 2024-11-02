@@ -19,11 +19,14 @@ services:
         cp /app/.env.example /app/.env;
       fi;
 
-      # Install npm dependencies
-      npm install;
+      # Install pnpm globally
+      npm install -g pnpm;
+
+      # Install dependencies using pnpm
+      pnpm install;
 
       # Build the assets
-      npm run build;
+      pnpm run build;
 
       composer install;
       
