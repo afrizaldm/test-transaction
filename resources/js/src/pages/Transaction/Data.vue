@@ -5,6 +5,8 @@ import { TransactionStorage } from "@/services/Transaction";
 import { Transaction } from "@/types";
 import { axios } from "@/modules/axios";
 import router from "@/router";
+import { TokenStorage } from "@/services/Token";
+import { AuthStorage } from "@/services/Auth";
 
 const filteredString = ref<string>('')
 const filteredDataTransaction = ref<Transaction[]>([])
@@ -45,7 +47,9 @@ const add = () => {
 }
 
 const logout = () => {
-    
+    TokenStorage.value = ''
+    AuthStorage.value = null
+    router.replace('/auth/signin')
 }
 
 
