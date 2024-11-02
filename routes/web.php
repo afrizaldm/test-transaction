@@ -10,5 +10,6 @@ Route::get('/', function () {
 
 
 Route::get('/', [AppController::class, 'app']);
+Route::get('/ping', [AppController::class, 'ping']);
 Route::get('/app', [AppController::class, 'app']);
 Route::get('/app/{any}', [AppController::class, 'app'])->where('any', '.*');

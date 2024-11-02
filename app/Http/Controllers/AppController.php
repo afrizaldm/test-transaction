@@ -10,7 +10,7 @@ class AppController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function app()
     {
         return view('app');
     }
@@ -18,5 +18,9 @@ class AppController extends Controller
     public function redirect()
     {
         return redirect('/');
+    }
+
+    public function ping() {
+        return 'pong';
     }
 }
