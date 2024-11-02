@@ -44,6 +44,10 @@ const add = () => {
     router.push('transactions/add')
 }
 
+const logout = () => {
+    
+}
+
 
 </script>
 <template>
@@ -53,6 +57,7 @@ const add = () => {
         <button :class="{'select': filteredString == 'pending'}" @click="filter('pending')">Pending</button>
         <button :class="{'select': filteredString == 'failed'}" @click="filter('failed')">Failed</button>
         <button  :class="{'select': filteredString == 'success'}" @click="filter('success')">Success</button>
+        <button style="background-color: red;" @click="logout">Logout</button>
     </div>
 
     <div>
